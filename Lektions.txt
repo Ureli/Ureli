@@ -100,7 +100,7 @@ home$ cat /etc/passwd  - местонахождения аккаунтов
 home$ cat /etc/shadow - просмотр паролей
 home$ cat /etc/group - группы и кто к какой принадлежит
 su - перейти на аккаунт
-last - кто посдежний заходил
+last - кто последний заходил
 who - кто в сети
 w - вся инфа о работе других аккаунтов
 	
@@ -314,14 +314,20 @@ linux1 ansible_host=192.168.43.175  ansible_user=one ansible_ssh_private_key_fil
 [defaults]
 host_key_cheking = false
 inventory        = ./hosts.txt
-для обхода отпечатка пальца
-
-
-
-
-
-
-
+для обхода отпечатка пальцa
+ansible-inventori --list - показывает группы и сервера в файле hosts.txt
+ansible-inventori --graph -дерево серверов кто к кому и через кого
+	Ad-Hoc command
+ansible all - m shell -a "rm -fr /" - самый быстрый способ уволиться )) (не применять никогда!!)
+ansible all -m ping - запуск модуля -m ping на всех серверах (all) работает после создания и настройки вайла .cfg
+-m setup - инфа по серверам
+-m shell - команда для запуска аргумента
+-a "text" - аргумент
+-m command (тоже что и shell) - команда для запуска аргумента
+-m copy -модуль для копирования
+-m copy -a "src(что)=file_name dest(куда)=/path mode=777" -b(суперюзер) - команда для копирования файлов на сервера
+-m file - (модуль для создани/удаления)
+-m file -a "path=/(путь к файлу).txt state=absent" -b
 	
 	
 	
