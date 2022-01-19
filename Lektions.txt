@@ -317,20 +317,51 @@ inventory        = ./hosts.txt
 для обхода отпечатка пальцa
 ansible-inventori --list - показывает группы и сервера в файле hosts.txt
 ansible-inventori --graph -дерево серверов кто к кому и через кого
+при работе с yml задачами, необходимо = измеить на :                 
+
+
+
 	Ad-Hoc command
 ansible all - m shell -a "rm -fr /" - самый быстрый способ уволиться )) (не применять никогда!!)
 ansible all -m ping - запуск модуля -m ping на всех серверах (all) работает после создания и настройки вайла .cfg
 -m setup - инфа по серверам
--m shell - команда для запуска аргумента
+-m shell - команда для работы с командами
 -a "text" - аргумент
 -m command (тоже что и shell) - команда для запуска аргумента
 -m copy -модуль для копирования
 -m copy -a "src(что)=file_name dest(куда)=/path mode=777" -b(суперюзер) - команда для копирования файлов на сервера
 -m file - (модуль для создани/удаления)
 -m file -a "path=/(путь к файлу).txt state=absent" -b
-	
-	
-	
+-m file -a "... ... .. state=absent" для удаления
+-m uri -a "http... return_content=yes" для просмотра сайтов
+ 
+ 
+ 	playbook
+ tasks - для выполнения команд
+ become - права root
+ hosts - какие сервера
+ - debug: - для вывода переменных
+     var:переменная
+     msg:"сообщение" {{ переменная }}
+ - set_fact: для объединения переменных
+ - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 	
 	
 	
 	
