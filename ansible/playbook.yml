@@ -1,0 +1,28 @@
+
+---
+- name: My Super Playbook for Variables Lesson
+  hosts: all
+  become: yes
+
+  vars:
+    messege1: Privet
+    messege2: World
+    secret  : qwert
+
+  tasks:
+
+  - name: Print Secret variable
+    debug:
+      var: secret
+
+  - debug: 
+      msg: "Sekretnoe slovo: {{ secret }} 
+
+  - sebug:
+      msg: "Vladelec Etogo Servera -->{{ owner }}<--"
+ 
+  - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}"
+  
+  - debug:
+      var: full_message
+
