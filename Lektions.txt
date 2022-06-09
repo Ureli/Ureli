@@ -205,7 +205,11 @@ save and exit
 sudo ifdown namecard - выключить сетевую карту
 sudo ifup namecard - включить сетевую карту
 
+
+
+
 	SSH ПОДКЛЮЧЕНИЕ К УДАЛЕННОМУ ЛИНУКС
+	
 для подлючения к удаленному линуксу необходимо проверить наличие ssh на обоих устройствах
 проверить открыть ли порт 22
 на ubuntu:
@@ -333,9 +337,7 @@ ansible all -m ping - запуск модуля -m ping на всех серве
 -m file - (модуль для создани/удаления)
 -m file -a "path=/(путь к файлу).txt state=absent" -b
 -m file -a "... ... .. state=absent" для удаления
--m uri -a "http... return_content=yes" для просмотра сайтов
- 
- 
+-m uri -a "http... return_content=yes" для просмотра сайтов 
  	playbook
  tasks - для выполнения команд
  become - права root
@@ -345,7 +347,23 @@ ansible all -m ping - запуск модуля -m ping на всех серве
      msg:"сообщение" {{ переменная }}
  - set_fact: для объединения переменных
  - set_fact: full_message="{{ message1 }} {{ message2 }} from {{ owner }}
-
+	Block-When
+debug: var=ansible_os_family - проверка линукса
+apt: name=apache2 state-latest - установка апач на убунту
+when: ansible_os_family == ubuntu - команда для указания какую версию линукс использовать
+- block: #название блока
+   - name: Install Apache Web Server for RadHat
+     yum: name+httpd state=latest
+     
+   - name: Copy HomePage file to WebServer
+     copy: src={{ source_file }} dest={{ destin_file }} mode=0555
+     nptify: Restart Apache RedHat
+     
+   - name: Start Web Server service for RadHat
+    service: name=httpd state=started enable=yes
+  when: ansible_os_family == "RedHat"
+пример блока для установки Apache2 на Linux RedHat
+    
 
  
  
