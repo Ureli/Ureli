@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  nginx: 
+    build: ./
+    container_name: mynginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"  
+    volumes:
+      - web-root:/var/www/html
+      - ./nginx_conf:/etc/nginx/conf.d
+      - ./html:/usr/share/nginx/html
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
+    networks:
+      - app-network
+  
+  certbot:
+    image: certbot/certbot
+    container_name: mycertbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-var:/var/lib/letsencrypt
+      - web-root:/var/www/html
+    depends_on:
+      - nginx
+    command: certonly --webroot --webroot-path=/var/www/html --email chus.yuri@mail.ru --agree-tos --no-eff-email --force-renewal -d yurichus.tk  -d www.yurichus.tk
+    networks:
+      - app-network
+volumes:
+  certbot-etc:
+  certbot-var:
+  web-root:
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/yuri/jobe/dhparam/
+      o: bind
+
+networks:
+  app-network:
+    driver: bridge
